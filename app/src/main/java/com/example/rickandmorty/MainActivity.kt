@@ -11,20 +11,26 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ListView
+import com.example.rickandmorty.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private lateinit var searchButton:Button
     private lateinit var editText: EditText
-    //private lateinit var list:ListView
+    private lateinit var list:ListView
+    private lateinit var bind : ActivityMainBinding
     private var getCharacters:GetAllCharacters = GetAllCharacters()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val characters:List<Character> = getCharacters.getAllCharacters();
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        bind = ActivityMainBinding.inflate(layoutInflater)
+
+        setContentView(bind.root)
+
         searchButton = findViewById(R.id.searchButton)
         editText = findViewById(R.id.editTxt)
-        //list = findViewById(R.id.listView)
+        list = findViewById(R.id.listView)
+        bind.listView.adapter = ListAdapter(this, characters)
 
         editText.addTextChangedListener(object : TextWatcher{
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
