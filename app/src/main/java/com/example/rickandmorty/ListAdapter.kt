@@ -1,13 +1,12 @@
 package com.example.rickandmorty
 
-import android.app.Activity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
 
-class ListAdapter(private val context: Activity, private val array: List<Character>) : ArrayAdapter<Character>(
+class ListAdapter(private val context: MainActivity, private val array: List<Character>) : ArrayAdapter<Character>(
     context, R.layout.one_item, array
 ) {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {

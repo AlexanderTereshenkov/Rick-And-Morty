@@ -3,35 +3,30 @@ package com.example.rickandmorty
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Debug
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ListView
+import android.widget.*
 import com.example.rickandmorty.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var searchButton:Button
     private lateinit var editText: EditText
     private lateinit var list:ListView
     private lateinit var bind : ActivityMainBinding
-    private var getCharacters:GetAllCharacters = GetAllCharacters()
+    //private var getCharacters:GetAllCharacters = GetAllCharacters()
+    private var characters:List<Character> = GetAllCharacters().getAllCharacters()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        val characters:List<Character> = getCharacters.getAllCharacters();
+        //val characters:List<Character> = getCharacters.getAllCharacters();
         super.onCreate(savedInstanceState)
         bind = ActivityMainBinding.inflate(layoutInflater)
-
         setContentView(bind.root)
-
-        searchButton = findViewById(R.id.searchButton)
         editText = findViewById(R.id.editTxt)
         list = findViewById(R.id.listView)
         bind.listView.adapter = ListAdapter(this, characters)
-
+        bind.listView.isClickable = true
+        clickableList(characters)
         editText.addTextChangedListener(object : TextWatcher{
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
@@ -47,6 +42,14 @@ class MainActivity : AppCompatActivity() {
                 for(i in 0 until matchNames.size){
                     Log.i("boo", matchNames[i].name)
                 }
+                if(s.toString() != ""){
+                    bind.listView.adapter = ListAdapter(this@MainActivity, matchNames)
+                    clickableList(matchNames)
+                }
+                else{
+                    bind.listView.adapter = ListAdapter(this@MainActivity, characters)
+                    clickableList(characters)
+                }
                 Log.i("boo", "----")
 
             }
@@ -56,18 +59,15 @@ class MainActivity : AppCompatActivity() {
             }
 
         })
-        searchButton.setOnClickListener(View.OnClickListener {
-            val characterName:String = editText.text.toString()
-            if(characterName != ""){
-                for(i in 0 until characterName.length - 1){
-                    if(characters[i].name == characterName){
-                        val newIntent = Intent(this, MainActivity2::class.java)
-                        newIntent.putExtra(NAME, i)
-                        startActivity(newIntent)
-                    }
-                }
-            }
-        })
+
+    }
+    private fun clickableList(array : List<Character>) : Unit{
+        bind.listView.setOnItemClickListener { parent, view, position, id ->
+            val index = characters.indexOf(array[position])
+            val intent = Intent(this@MainActivity, MainActivity2::class.java)
+            intent.putExtra(NAME, index)
+            startActivity(intent)
+        }
     }
 
 }
