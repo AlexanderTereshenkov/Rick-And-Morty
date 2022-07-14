@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">Rick and Morty</string>
-    <string name="name">Введите имя...</string>
+    <string name="name">Enter name...</string>
 
 </resources>
