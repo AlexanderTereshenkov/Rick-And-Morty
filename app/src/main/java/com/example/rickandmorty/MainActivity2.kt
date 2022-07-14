@@ -6,13 +6,7 @@ import android.widget.ImageView
 import android.widget.TextView
 
 const val NAME:String = "name"
-/*
-const val IMG:Int = 0
-const val RACEANDSTATUS:String = "race"
-const val GEN:String = "gen"
-const val ORI:String = "ori"
-const val LOC:String = "loc"
-*/
+
 
 class MainActivity2 : AppCompatActivity() {
     private lateinit var getCharacters:GetAllCharacters
@@ -42,7 +36,7 @@ class MainActivity2 : AppCompatActivity() {
         raceAndStatus.text = character.status.toString() + " - " + character.species
         img.setImageResource(character.img)
         gender.text = character.gender
-        origin.text = character.origin
-        location.text = character.location
+        origin.text = "Origin: " + character.origin
+        location.text = "Last known location: " + character.location
     }
 }

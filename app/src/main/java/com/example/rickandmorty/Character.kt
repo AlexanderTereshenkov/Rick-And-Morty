@@ -1,7 +1,5 @@
 package com.example.rickandmorty
 
-import android.media.Image
-
 
 data class Character(val id:Int, val name:String, val status:Status, val species:String, val gender:
 String,val origin:String, val location:String, val img:Int)
@@ -19,7 +17,7 @@ class GetAllCharacters{
                 "Male", "Mr. Goldenfold's dream", "Mr. Goldenfold's dream",
                 R.drawable.scary),
             Character(405, "Trunkphobic suspenders guy", Status.Alive,
-                "Human", "Male", "unknown", "Earth (Replacement Dimension",
+                "Human", "Male", "unknown", "Earth (Replacement Dimension)",
             R.drawable.trun),
             Character(628, "Beth Smith", Status.Alive, "Human", "Female",
             "Morty’s Story", "Morty’s Story", R.drawable.beth),

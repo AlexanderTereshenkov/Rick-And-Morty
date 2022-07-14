@@ -5,8 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
-import android.view.View
 import android.widget.*
 import com.example.rickandmorty.databinding.ActivityMainBinding
 
@@ -14,11 +12,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var editText: EditText
     private lateinit var list:ListView
     private lateinit var bind : ActivityMainBinding
-    //private var getCharacters:GetAllCharacters = GetAllCharacters()
     private var characters:List<Character> = GetAllCharacters().getAllCharacters()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        //val characters:List<Character> = getCharacters.getAllCharacters();
         super.onCreate(savedInstanceState)
         bind = ActivityMainBinding.inflate(layoutInflater)
         setContentView(bind.root)
@@ -35,12 +31,9 @@ class MainActivity : AppCompatActivity() {
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 var matchNames : List<Character> = listOf()
                 for(i in 0 until characters.size){
-                    if(characters[i].name.startsWith(s.toString())){
+                    if(characters[i].name.startsWith(s.toString().replaceFirstChar{it.uppercase()})){
                         matchNames = matchNames + characters[i]
                     }
-                }
-                for(i in 0 until matchNames.size){
-                    Log.i("boo", matchNames[i].name)
                 }
                 if(s.toString() != ""){
                     bind.listView.adapter = ListAdapter(this@MainActivity, matchNames)
@@ -50,7 +43,6 @@ class MainActivity : AppCompatActivity() {
                     bind.listView.adapter = ListAdapter(this@MainActivity, characters)
                     clickableList(characters)
                 }
-                Log.i("boo", "----")
 
             }
 
@@ -69,5 +61,4 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
-
 }
